@@ -8,27 +8,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- jQuery & jQuery UI are required -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="js/jquery-3.3.1.js"></script>
+	<!-- <script src="js/jquery-1.10.2.js"></script> -->
+	<script src="js/jquery-ui.js"></script>
+	<script src='js/jquery.panzoom.js'></script>
+	<script src='js/jquery.mousewheel.js'></script>
 
 	<!-- Flowchart CSS and JS -->
-	<link rel="stylesheet" href="jquery.flowchart.css">
-	<script src="jquery.flowchart.js"></script>
+	<link rel="stylesheet" href="css/jquery.flowchart.css">
+	<script src="js/jquery.flowchart.js"></script>
 
-	<style>
-		.flowchart-example-container {
-			width: 800px;
-			height: 400px;
-			background: white;
-			border: 1px solid #BBB;
-			margin-bottom: 10px;
-		}
-	</style>
+
 </head>
 
 <body>
 	<h1>Semi-minimalist usage sample</h1>
-	<h4>Sample created with basis on some from Sebastien Drouyer, original author's <a href="https://sebastien.drouyer.com/jquery.flowchart-demo/">website</a>.</h4>
 	<h4>Flowchart</h4>
 	<div id="chart_container">
 		<div class="flowchart-example-container" id="flowchartworkspace"></div>
@@ -63,9 +57,34 @@
 	</div>
 	<script type="text/javascript">
 		/* global $ */
-		$(document).ready(function() {
+		$(document).ready(function () {
 			var $flowchart = $('#flowchartworkspace');
 			var $container = $flowchart.parent();
+
+
+
+			var cx = $flowchart.width() / 2;
+			var cy = $flowchart.height() / 2;
+			// Panzoom initialization...
+			$flowchart.panzoom();
+
+			// Centering panzoom
+			$flowchart.panzoom('pan', -cx + $container.width() / 2, -cy + $container.height() / 2);
+
+			// Panzoom zoom handling...
+			var possibleZooms = [0.5, 0.75, 1, 2, 3];
+			var currentZoom = 2;
+			$container.on('mousewheel.focal', function (e) {
+				e.preventDefault();
+				var delta = (e.delta || e.originalEvent.wheelDelta) || e.originalEvent.detail;
+				var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+				currentZoom = Math.max(0, Math.min(possibleZooms.length - 1, (currentZoom + (zoomOut * 2 - 1))));
+				$flowchart.flowchart('setPositionRatio', possibleZooms[currentZoom]);
+				$flowchart.panzoom('zoom', possibleZooms[currentZoom], {
+					animate: false,
+					focal: e
+				});
+			});
 
 
 			// Apply the plugin on a standard, empty div...
@@ -76,7 +95,6 @@
 				multipleLinksOnInput: true,
 				multipleLinksOnOutput: true
 			});
-
 
 			function getOperatorData($element) {
 				var nbInputs = parseInt($element.data('nb-inputs'), 10);
@@ -117,34 +135,34 @@
 			var $linkColor = $('#link_color');
 
 			$flowchart.flowchart({
-				onOperatorSelect: function(operatorId) {
+				onOperatorSelect: function (operatorId) {
 					$operatorProperties.show();
 					$operatorTitle.val($flowchart.flowchart('getOperatorTitle', operatorId));
 					return true;
 				},
-				onOperatorUnselect: function() {
+				onOperatorUnselect: function () {
 					$operatorProperties.hide();
 					return true;
 				},
-				onLinkSelect: function(linkId) {
+				onLinkSelect: function (linkId) {
 					$linkProperties.show();
 					$linkColor.val($flowchart.flowchart('getLinkMainColor', linkId));
 					return true;
 				},
-				onLinkUnselect: function() {
+				onLinkUnselect: function () {
 					$linkProperties.hide();
 					return true;
 				}
 			});
 
-			$operatorTitle.keyup(function() {
+			$operatorTitle.keyup(function () {
 				var selectedOperatorId = $flowchart.flowchart('getSelectedOperatorId');
 				if (selectedOperatorId != null) {
 					$flowchart.flowchart('setOperatorTitle', selectedOperatorId, $operatorTitle.val());
 				}
 			});
 
-			$linkColor.change(function() {
+			$linkColor.change(function () {
 				var selectedLinkId = $flowchart.flowchart('getSelectedLinkId');
 				if (selectedLinkId != null) {
 					$flowchart.flowchart('setLinkMainColor', selectedLinkId, $linkColor.val());
@@ -157,7 +175,7 @@
 			//-----------------------------------------
 			//--- delete operator / link button
 			//--- start
-			$flowchart.parent().siblings('.delete_selected_button').click(function() {
+			$flowchart.parent().siblings('.delete_selected_button').click(function () {
 				$flowchart.flowchart('deleteSelected');
 			});
 			//--- end
@@ -170,7 +188,7 @@
 			//--- create operator button
 			//--- start
 			var operatorI = 0;
-			$flowchart.parent().siblings('.create_operator').click(function() {
+			$flowchart.parent().siblings('.create_operator').click(function () {
 				var operatorId = 'created_operator_' + operatorI;
 				var operatorData = {
 					top: ($flowchart.height() / 2) - 30,
@@ -215,12 +233,12 @@
 				appendTo: 'body',
 				zIndex: 1000,
 
-				helper: function(e) {
+				helper: function (e) {
 					var $this = $(this);
 					var data = getOperatorData($this);
 					return $flowchart.flowchart('getOperatorElement', data);
 				},
-				stop: function(e, ui) {
+				stop: function (e, ui) {
 					var $this = $(this);
 					var elOffset = ui.offset;
 					var containerOffset = $container.offset();
@@ -301,30 +319,40 @@
 
 		var defaultFlowchartData = {
 			operators: {
-				operator1: {
+				EMQ_1: {
 					top: 20,
 					left: 20,
 					properties: {
-						title: 'Operator 1',
-						inputs: {},
+						title: 'EMQ',
+						inputs: {
+							gw1_tpc: {
+								label: 'gw1_tpc'
+							},
+							gw2_tpc: {
+								label: 'gw2_tpc'
+							}
+						},
 						outputs: {
-							output_1: {
-								label: 'Output 1',
+							gw1_tpc: {
+								label: 'gw1_tpc',
+							},
+							gw2_tpc: {
+								label: 'gw2_tpc',
 							}
 						}
 					}
 				},
-				operator2: {
+				GW_1: {
 					top: 80,
 					left: 300,
 					properties: {
-						title: 'Operator 2',
+						title: '数据采集网关#1',
 						inputs: {
-							input_1: {
-								label: 'Input 1',
+							mqtt_cli: {
+								label: 'mqtt_cli',
 							},
-							input_2: {
-								label: 'Input 2',
+							opc_ua_cli: {
+								label: 'opc_ua_cli',
 							},
 						},
 						outputs: {}
@@ -333,10 +361,10 @@
 			},
 			links: {
 				link_1: {
-					fromOperator: 'operator1',
-					fromConnector: 'output_1',
-					toOperator: 'operator2',
-					toConnector: 'input_2',
+					fromOperator: 'EMQ_1',
+					fromConnector: 'gw1_tpc',
+					toOperator: 'GW_1',
+					toConnector: 'mqtt_cli',
 				},
 			}
 		};
