@@ -1,37 +1,8 @@
-## Welcome to GitHub Pages
+## 欢迎访问物联网配置前端
 
-You can use the [editor on GitHub](https://github.com/lvyv/jquery.flowchart/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+物联网平台包含一系列的软件组成的数据采集与指令下发通道。这些软件相互之间的连接关系是通过各个软件的配置文件完成。
+为了对这些软件进行图形化的配置并能实时监测通道通道的工作状况，建立了本项目。
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/lvyv/jquery.flowchart/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+[项目实例](https://lvyv.github.io/jquery.flowchart/demo/demo.html) 项目原型实例
