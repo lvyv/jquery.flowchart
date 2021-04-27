@@ -14,7 +14,7 @@
 
 本项目是物联网子系统项目的一个部份。
 
-![UltIDE Screenshot](https://ultide.github.io/ultide-documentation/images/screenshot.png?version=2)
+![系统总体架构](https://lvyv.github.io/jquery.flowchart/images/architecture-ovw.svg)
 
 许可协议
 -------
