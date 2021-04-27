@@ -24,17 +24,17 @@
   },
   "maintainers": [
     {
-      "name": "Sébastien Drouyer",
-      "url": "http://sebastien.drouyer.com"
+      "name": "26896225@qq.com",
+      "url": "https://lvyv.github.io/jquery.flowchart/"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/sdrdis/jquery.flowchart"
+    "url": "https://github.com/lvyv/jquery.flowchart"
   },
-  "homepage": "http://sebastien.drouyer.com/jquery.flowchart-demo/",
-  "docs": "https://github.com/sdrdis/jquery.flowchart/",
-  "bugs": "https://github.com/sdrdis/jquery.flowchart/issues",
+  "homepage": "https://lvyv.github.io/jquery.flowchart/",
+  "docs": "https://lvyv.github.io/jquery.flowchart/",
+  "bugs": "https://github.com/lvyv/jquery.flowchart/issues",
   "dependencies": {
     "jquery": "~3.3.1",
     "jquery-ui": "~1.11.4",
