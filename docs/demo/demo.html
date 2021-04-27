@@ -23,7 +23,7 @@
 
 <body>
 	<h1>物联网子系统数据通道配置与通信状态监测</h1>
-	<div id="chart_container">
+	<div id="chart_container" tabindex="0">
 		<div class="flowchart-example-container" id="flowchartworkspace"></div>
 	</div>
 	<div class="draggable_operators">
@@ -85,6 +85,16 @@
 				});
 			});
 
+			$(document).keydown(function(evt) {
+				switch(evt.keyCode) {
+					case 46:	//del key
+						$flowchart.flowchart('deleteSelected');
+						break;
+					default:
+						console.log(evt);
+				}
+				console.log("key down", evt);
+			});
 
 			// Apply the plugin on a standard, empty div...
 			$flowchart.flowchart({

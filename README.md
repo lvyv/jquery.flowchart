@@ -20,11 +20,11 @@
 -------
 jquery.flowchart.js is under [MIT license](https://github.com/sdrdis/jquery.flowchart/blob/master/MIT-LICENSE.txt).
 
-Authors
+作者
 -------
 * [吕昱](https://github.com/lvyv) 
 
 贡献者
 ------------
-本项目来自[Sebastien Drouyer](http://sebastien.drouyer.com/)的杰出。
+本项目来自[Sebastien Drouyer](http://sebastien.drouyer.com/)的工作。
 
