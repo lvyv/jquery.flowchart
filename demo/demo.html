@@ -22,8 +22,7 @@
 </head>
 
 <body>
-	<h1>Semi-minimalist usage sample</h1>
-	<h4>Flowchart</h4>
+	<h1>物联网子系统数据通道配置与通信状态监测</h1>
 	<div id="chart_container">
 		<div class="flowchart-example-container" id="flowchartworkspace"></div>
 	</div>
@@ -32,12 +31,12 @@
 			Operators (drag and drop them in the flowchart):
 		</div>
 		<div class="draggable_operators_divs">
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="0">1 input</div>
-			<div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">1 output</div>
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="1">1 input &amp; 1 output</div>
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="2">1 in &amp; 2 out</div>
-			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="1">2 in &amp; 1 out</div>
-			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="2">2 in &amp; 2 out</div>
+			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="0">EMQ服务器</div>
+			<div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">KAFKA服务器</div>
+			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="1">数据采集网关软件</div>
+			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="2">物联网管理软件</div>
+			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="1">数据采集模拟器</div>
+			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="2">指令下发模拟器</div>
 		</div>
 	</div>
 	<button class="create_operator">Create operator</button>

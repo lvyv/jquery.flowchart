@@ -2,7 +2,7 @@ jquery.flowchart
 ================
 
 Javascript jQuery plugin that allows you to draw a flow chart. Take a look at the demo:
-http://sebastien.drouyer.com/jquery.flowchart-demo/
+https://lvyv.github.io/jquery.flowchart/demo/demo.html
 
 Description
 -----------
