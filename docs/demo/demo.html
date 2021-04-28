@@ -1,100 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-	<title>Home</title>
+	<title>物联网子系统数据通道配置与通信状态监测</title>
 	<meta charset="utf-8">
-
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<!-- jQuery & jQuery UI are required -->
+	<!-- jQuery are required -->
 	<script src="js/jquery-3.3.1.js"></script>
-	<!-- <script src="js/jquery-1.10.2.js"></script> -->
-	<script src="js/jquery-ui.js"></script>
+	<!-- UI & themes -->
+	<script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
+	<!-- jQuery plugins are required -->
 	<script src='js/jquery.panzoom.js'></script>
 	<script src='js/jquery.mousewheel.js'></script>
 
-	<!-- Flowchart CSS and JS -->
+	<!-- this project: flowchart -->
 	<link rel="stylesheet" href="css/jquery.flowchart.css">
 	<script src="js/jquery.flowchart.js"></script>
-
-
 </head>
 
 <body>
 	<h1>物联网子系统数据通道配置与通信状态监测</h1>
-	<div id="chart_container" tabindex="0">
-		<div class="flowchart-example-container" id="flowchartworkspace"></div>
-	</div>
-	<div class="draggable_operators">
-		<div class="draggable_operators_label">
-			Operators (drag and drop them in the flowchart):
+	<div id="tabs">
+		<ul>
+			<li><a href="#fragment-1"><span>采集通道</span></a></li>
+			<li><a href="#fragment-2"><span>指令通道</span></a></li>
+			<li><a href="#fragment-3"><span>...</span></a></li>
+		</ul>
+		<div id="fragment-1">
+			<div id="chart_container" class="container_bg" tabindex="0">
+				<div class="flowchart-example-container" id="flowchartworkspace"></div>
+			</div>
+
+			<button class="create_operator">Create operator</button>
+			<button class="delete_selected_button">Delete selected operator / link</button>
+
+			<button id="get_data">Get data</button>
+			<button id="set_data">Set data</button>
+			<button id="save_local">Save to local storage</button>
+			<button id="load_local">载入本地存储</button>
+			<button id="load_properties">属性页</button>
+			<div id="properties_dialog" title="属性页" class="casic_dialog">
+				<div id="operator_properties" style="display: block;">
+					<label for="operator_title">Operator's title: </label><input id="operator_title" type="text">
+				</div>
+				<div id="link_properties" style="display: block;">
+					<label for="link_color">Link's color: </label><input id="link_color" type="color">
+				</div>
+				<div id="accordion">
+					<h3>属性列表</h3>
+					<div>
+						<p>
+							Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+							purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+							velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
+							suscipit faucibus urna.
+						</p>
+					</div>
+					<h3>状态</h3>
+					<div>
+						<p>
+							Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+							purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+							velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
+							suscipit faucibus urna.
+						</p>
+					</div>
+				</div>
+				<div>
+					<textarea id="flowchart_data"></textarea>
+				</div>
+			</div>
+
+			<div class="draggable_operators">
+				<div class="draggable_operators_divs">
+					<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="0">EMQ服务器</div>
+					<div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">KAFKA服务器</div>
+					<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="1">数据采集网关软件</div>
+					<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="2">物联网管理软件</div>
+					<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="1">数据采集模拟器</div>
+					<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="2">指令下发模拟器</div>
+				</div>
+			</div>
 		</div>
-		<div class="draggable_operators_divs">
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="0">EMQ服务器</div>
-			<div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">KAFKA服务器</div>
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="1">数据采集网关软件</div>
-			<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="2">物联网管理软件</div>
-			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="1">数据采集模拟器</div>
-			<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="2">指令下发模拟器</div>
+		<div id="fragment-2">
+			<div id="chart_container" tabindex="0">
+				<div class="flowchart-example-container" id="flowchartworkspace_2"></div>
+			</div>
 		</div>
+		<div id="fragment-3">
+			tab 3
+		</div>
+
 	</div>
-	<button class="create_operator">Create operator</button>
-	<button class="delete_selected_button">Delete selected operator / link</button>
-	<div id="operator_properties" style="display: block;">
-		<label for="operator_title">Operator's title: </label><input id="operator_title" type="text">
-	</div>
-	<div id="link_properties" style="display: block;">
-		<label for="link_color">Link's color: </label><input id="link_color" type="color">
-	</div>
-	<button class="get_data" id="get_data">Get data</button>
-	<button class="set_data" id="set_data">Set data</button>
-	<button id="save_local">Save to local storage</button>
-	<button id="load_local">Load from local storage</button>
-	<div>
-		<textarea id="flowchart_data"></textarea>
-	</div>
+
 	<script type="text/javascript">
 		/* global $ */
 		$(document).ready(function () {
+			$("#tabs").tabs();
+			$("#accordion").accordion();
+			opt = {
+				autoOpen: false,
+				position: {
+					my: 'right top',
+					at: 'right top',
+					of: $('#chart_container')
+				}
+			};
+			$("#properties_dialog").dialog(opt);
+			$("#load_properties").click(function () {
+				newOpt = $("#properties_dialog").dialog("option");
+				newOpt.height = $container.height();
+				newOpt.position = opt.position;
+				$("#properties_dialog").dialog("option", newOpt);
+				$("#properties_dialog").dialog("open");
+			});
+
 			var $flowchart = $('#flowchartworkspace');
 			var $container = $flowchart.parent();
 
-
-
-			var cx = $flowchart.width() / 2;
-			var cy = $flowchart.height() / 2;
-			// Panzoom initialization...
-			$flowchart.panzoom();
-
-			// Centering panzoom
-			$flowchart.panzoom('pan', -cx + $container.width() / 2, -cy + $container.height() / 2);
-
-			// Panzoom zoom handling...
-			var possibleZooms = [0.5, 0.75, 1, 2, 3];
-			var currentZoom = 2;
-			$container.on('mousewheel.focal', function (e) {
-				e.preventDefault();
-				var delta = (e.delta || e.originalEvent.wheelDelta) || e.originalEvent.detail;
-				var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
-				currentZoom = Math.max(0, Math.min(possibleZooms.length - 1, (currentZoom + (zoomOut * 2 - 1))));
-				$flowchart.flowchart('setPositionRatio', possibleZooms[currentZoom]);
-				$flowchart.panzoom('zoom', possibleZooms[currentZoom], {
-					animate: false,
-					focal: e
-				});
-			});
-
-			$(document).keydown(function(evt) {
-				switch(evt.keyCode) {
-					case 46:	//del key
-						$flowchart.flowchart('deleteSelected');
-						break;
-					default:
-						console.log(evt);
-				}
-				console.log("key down", evt);
-			});
+			var $flowchart2 = $('#flowchartworkspace_2');
+			var $container2 = $flowchart2.parent();
 
 			// Apply the plugin on a standard, empty div...
 			$flowchart.flowchart({
@@ -133,6 +159,26 @@
 
 
 
+			var cx = $flowchart.width() / 2;
+			var cy = $flowchart.height() / 2;
+			// Panzoom initialization...
+			$flowchart.panzoom();
+			// Centering panzoom
+			$flowchart.panzoom('pan', -cx + $container.width() / 2, -cy + $container.height() / 2);
+			// Panzoom zoom handling...
+			var possibleZooms = [0.5, 0.75, 1, 2, 3];
+			var currentZoom = 2;
+			$container.on('mousewheel.focal', function (e) {
+				e.preventDefault();
+				var delta = (e.delta || e.originalEvent.wheelDelta) || e.originalEvent.detail;
+				var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+				currentZoom = Math.max(0, Math.min(possibleZooms.length - 1, (currentZoom + (zoomOut * 2 - 1))));
+				$flowchart.flowchart('setPositionRatio', possibleZooms[currentZoom]);
+				$flowchart.panzoom('zoom', possibleZooms[currentZoom], {
+					animate: false,
+					focal: e
+				});
+			});
 			//-----------------------------------------
 			//--- operator and link properties
 			//--- start
@@ -160,6 +206,11 @@
 				},
 				onLinkUnselect: function () {
 					$linkProperties.hide();
+					return true;
+				},
+				onClickContainerBackground: function (x, y) {
+					console.log('backgroud clicked!', x, y);
+					Flow2Text();
 					return true;
 				}
 			});
@@ -324,8 +375,21 @@
 			//-----------------------------------------
 
 
+			/* global key events declaration and handler functions */
+			$(document).keydown(function (evt) {
+				switch (evt.keyCode) {
+					case 46:	//del key
+						$flowchart.flowchart('deleteSelected');
+						break;
+					default:
+						console.log(evt);
+				}
+				console.log("key down", evt);
+			});
+
 		});
 
+		// 初始化数据，载入缺省的图形
 		var defaultFlowchartData = {
 			operators: {
 				EMQ_1: {
@@ -378,6 +442,10 @@
 			}
 		};
 		if (false) console.log('remove lint unused warning', defaultFlowchartData);
+
+
+
+
 	</script>
 </body>
 

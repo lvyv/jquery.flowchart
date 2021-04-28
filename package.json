@@ -37,7 +37,7 @@
   "bugs": "https://github.com/lvyv/jquery.flowchart/issues",
   "dependencies": {
     "jquery": "~3.3.1",
-    "jquery-ui": "~1.11.4",
+    "jquery-ui": "~1.12.1",
     "jquery.mousewheel": "~3.1.13",
     "jquery.panzoom": "~3.1.1"
   }

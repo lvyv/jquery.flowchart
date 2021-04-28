@@ -62,6 +62,9 @@ jQuery(function ($) {
             },
             onAfterChange: function (changeType) {
 
+            },
+            onClickContainerBackground: function(...evt) {
+
             }
         },
         data: null,
@@ -149,6 +152,7 @@ jQuery(function ($) {
                 var $this = $(this);
                 var offset = $this.offset();
                 self._click((e.pageX - offset.left) / self.positionRatio, (e.pageY - offset.top) / self.positionRatio, e);
+                self._containerClickBackground(e);    //fire up container clicker event.
             });
 
 
@@ -160,13 +164,15 @@ jQuery(function ($) {
                 if ($(e.target).closest('.flowchart-operator-connector').length == 0) {
                     self.selectOperator($(this).data('operator_id'));
                 }
+                e.stopImmediatePropagation();//want to catch background click events.
             });
 
-            this.objs.layers.operators.on('click', '.flowchart-operator-connector', function () {
+            this.objs.layers.operators.on('click', '.flowchart-operator-connector', function (e) {
                 var $this = $(this);
                 if (self.options.canUserEditLinks) {
                     self._connectorClicked($this.closest('.flowchart-operator').data('operator_id'), $this.data('connector'), $this.data('sub_connector'), $this.closest('.flowchart-operator-connector-set').data('connector_type'));
                 }
+                e.stopImmediatePropagation();//want to catch background click events.
             });
 
             this.objs.layers.links.on('mousedown touchstart', '.flowchart-link', function (e) {
@@ -181,8 +187,9 @@ jQuery(function ($) {
                 self._connecterMouseOut($(this).data('link_id'));
             });
 
-            this.objs.layers.links.on('click', '.flowchart-link', function () {
+            this.objs.layers.links.on('click', '.flowchart-link', function (e) {
                 self.selectLink($(this).data('link_id'));
+                e.stopImmediatePropagation();//want to catch background click events.
             });
 
             this.objs.layers.operators.on('mouseover', '.flowchart-operator', function (e) {
@@ -842,6 +849,11 @@ jQuery(function ($) {
 
         _addHoverClassOperator: function (operatorId) {
             this.data.operators[operatorId].internal.els.operator.addClass('hover');
+        },
+
+        _containerClickBackground: function (e) {
+            if (!this.callbackEvent('clickContainerBackground', [e.offsetX.toString(),e.offsetY.toString()]))
+                return;
         },
 
         _removeHoverClassOperators: function () {
