@@ -51,10 +51,7 @@
 					<h3>属性列表</h3>
 					<div>
 						<p>
-							Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-							purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-							velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-							suscipit faucibus urna.
+							<a href="javascript:;" onClick="openPopup($(flowchart_data).val());">启动模拟器</a>
 						</p>
 					</div>
 					<h3>状态</h3>
@@ -68,7 +65,7 @@
 					</div>
 				</div>
 				<div>
-					<textarea id="flowchart_data"></textarea>
+					<textarea id="flowchart_data">http://192.168.101.7:1880/</textarea>
 				</div>
 			</div>
 
@@ -89,7 +86,7 @@
 			</div>
 		</div>
 		<div id="fragment-3">
-			tab 3
+			表页3
 		</div>
 
 	</div>
@@ -443,9 +440,9 @@
 		};
 		if (false) console.log('remove lint unused warning', defaultFlowchartData);
 
-
-
-
+		function openPopup(url) {
+			window.open(url, "_blank", "scrollbars=yes,resizable=1,modal=false,alwaysRaised=yes,location=no");
+		}
 	</script>
 </body>
 
