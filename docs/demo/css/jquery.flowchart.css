@@ -14,11 +14,13 @@
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #888; 
+	cursor: default;
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #666; 
+	cursor: default;
   }
 /*
  * jquery.flowchart - CSS definitions
@@ -228,6 +230,30 @@
 	display: none;
 }
 
+/*
+ * flowchart-operator-type
+ */
+ .flowchart-operator-type {
+    font-size: x-small;
+    width: 100%;
+    height: 16px;
+	border-radius: 4px;
+    background-color: #ffffff;
+}
+
+ .flowchart-operator-type-a {
+    width: 16px;
+    height: 16px;
+	border-radius: 4px;
+    background-color: #fd4c20;
+}
+
+.flowchart-operator-type-b {
+    width: 16px;
+    height: 16px;
+	border-radius: 4px;
+    background-color: #66fd20;
+}
 
 /*
  * flowchart-operator-body

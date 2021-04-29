@@ -42,7 +42,7 @@
 			<button id="load_properties">属性页</button>
 			<div id="properties_dialog" title="属性页" class="casic_dialog">
 				<div id="operator_properties" style="display: block;">
-					<label for="operator_title">Operator's title: </label><input id="operator_title" type="text">
+					<label for="operator_title">名称</label><input id="operator_title" type="text"><span id="sw_up">活动</span>
 				</div>
 				<div id="link_properties" style="display: block;">
 					<label for="link_color">Link's color: </label><input id="link_color" type="color">
@@ -71,12 +71,12 @@
 
 			<div class="draggable_operators">
 				<div class="draggable_operators_divs">
-					<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="0">EMQ服务器</div>
-					<div class="draggable_operator" data-nb-inputs="0" data-nb-outputs="1">KAFKA服务器</div>
-					<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="1">数据采集网关软件</div>
-					<div class="draggable_operator" data-nb-inputs="1" data-nb-outputs="2">物联网管理软件</div>
-					<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="1">数据采集模拟器</div>
-					<div class="draggable_operator" data-nb-inputs="2" data-nb-outputs="2">指令下发模拟器</div>
+					<div class="draggable_operator" data-prop="EMQ" data-nb-inputs="6" data-nb-outputs="6">EMQ服务器</div>
+					<div class="draggable_operator" data-prop="KAFKA" data-nb-inputs="1" data-nb-outputs="1">KAFKA服务器</div>
+					<div class="draggable_operator" data-prop="IOT_GW" data-nb-inputs="1" data-nb-outputs="1">数据采集网关软件</div>
+					<div class="draggable_operator" data-prop="IOT_SVR" data-nb-inputs="1" data-nb-outputs="1">物联网管理软件</div>
+					<div class="draggable_operator" data-prop="NR_SIM" data-nb-inputs="1" data-nb-outputs="1">数据采集模拟器</div>
+					<div class="draggable_operator" data-prop="NR_SIM" data-nb-inputs="1" data-nb-outputs="1">指令下发模拟器</div>
 				</div>
 			</div>
 		</div>
@@ -112,6 +112,12 @@
 				$("#properties_dialog").dialog("option", newOpt);
 				$("#properties_dialog").dialog("open");
 			});
+			$("#sw_up").click(function () {
+				var selectedOperatorId = $flowchart.flowchart('getSelectedOperatorId');
+				if (selectedOperatorId != null) {
+					$flowchart.flowchart('setOperatorState', selectedOperatorId, 1);
+				}
+			});
 
 			var $flowchart = $('#flowchartworkspace');
 			var $container = $flowchart.parent();
@@ -131,6 +137,7 @@
 			function getOperatorData($element) {
 				var nbInputs = parseInt($element.data('nb-inputs'), 10);
 				var nbOutputs = parseInt($element.data('nb-outputs'), 10);
+				var sProp = $element.data('prop');
 				var data = {
 					properties: {
 						title: $element.text(),
@@ -150,7 +157,9 @@
 						label: 'Output ' + (i + 1)
 					};
 				}
-
+				if(sProp) {
+					data.prop = sProp;
+				}
 				return data;
 			}
 
@@ -285,20 +294,20 @@
 			$draggableOperators.draggable({
 				cursor: "move",
 				opacity: 0.7,
-
-				// helper: 'clone',
 				appendTo: 'body',
 				zIndex: 1000,
-
+				//创建拖动过程中相对更加真实的拖动对象（相比helper: "clone"）
 				helper: function (e) {
 					var $this = $(this);
 					var data = getOperatorData($this);
 					return $flowchart.flowchart('getOperatorElement', data);
+					
 				},
 				stop: function (e, ui) {
 					var $this = $(this);
 					var elOffset = ui.offset;
 					var containerOffset = $container.offset();
+					//should be in the container area
 					if (elOffset.left > containerOffset.left &&
 						elOffset.top > containerOffset.top &&
 						elOffset.left < containerOffset.left + $container.width() &&
@@ -388,55 +397,8 @@
 
 		// 初始化数据，载入缺省的图形
 		var defaultFlowchartData = {
-			operators: {
-				EMQ_1: {
-					top: 20,
-					left: 20,
-					properties: {
-						title: 'EMQ',
-						inputs: {
-							gw1_tpc: {
-								label: 'gw1_tpc'
-							},
-							gw2_tpc: {
-								label: 'gw2_tpc'
-							}
-						},
-						outputs: {
-							gw1_tpc: {
-								label: 'gw1_tpc',
-							},
-							gw2_tpc: {
-								label: 'gw2_tpc',
-							}
-						}
-					}
-				},
-				GW_1: {
-					top: 80,
-					left: 300,
-					properties: {
-						title: '数据采集网关#1',
-						inputs: {
-							mqtt_cli: {
-								label: 'mqtt_cli',
-							},
-							opc_ua_cli: {
-								label: 'opc_ua_cli',
-							},
-						},
-						outputs: {}
-					}
-				},
-			},
-			links: {
-				link_1: {
-					fromOperator: 'EMQ_1',
-					fromConnector: 'gw1_tpc',
-					toOperator: 'GW_1',
-					toConnector: 'mqtt_cli',
-				},
-			}
+			operators: {},
+			links: {}
 		};
 		if (false) console.log('remove lint unused warning', defaultFlowchartData);
 

@@ -16,7 +16,16 @@ jQuery(function ($) {
         options: {
             canUserEditLinks: true,
             canUserMoveOperators: true,
-            data: {},
+            data: {
+                /* Why we need this? because NR_SIM is business logic, and SVR/CLI/MIX is coherent */
+                operatorTypes: {
+                    "NR_SIM": "DBG",    //dash dot link
+                    "IOT_SVR": "MIX",   //main channel   
+                    "IOT_GW": "CLI",
+                    "EMQ" : "SVR",
+                    "KAFKA": "SVR"
+                }
+            },
             distanceFromArrow: 3,
             defaultOperatorClass: 'flowchart-default-operator',
             defaultLinkColor: '#3366ff',
@@ -58,13 +67,14 @@ jQuery(function ($) {
                 return true;
             },
             onOperatorMoved: function (operatorId, position) {
-
+                return true;
             },
             onAfterChange: function (changeType) {
-
+                console.log(changeType);
+                return true;
             },
             onClickContainerBackground: function(...evt) {
-
+                return true;
             }
         },
         data: null,
@@ -204,7 +214,9 @@ jQuery(function ($) {
 
         setData: function (data) {
             this._clearOperatorsLayer();
-            this.data.operatorTypes = {};
+            if(data.operatorTypes)
+                this.data.operatorTypes = data.operatorTypes;
+
             if (typeof data.operatorTypes != 'undefined') {
                 this.data.operatorTypes = data.operatorTypes;
             }
@@ -518,7 +530,7 @@ jQuery(function ($) {
             }
             return infos;
         },
-
+        //确定节点的显示样式
         _getOperatorFullElement: function (operatorData) {
             var infos = this.getOperatorCompleteData(operatorData);
 
@@ -528,6 +540,13 @@ jQuery(function ($) {
             var $operator_title = $('<div class="flowchart-operator-title"></div>');
             $operator_title.html(infos.title);
             $operator_title.appendTo($operator);
+
+            //add type field
+            if(infos.type) {
+                var $operator_type = $('<div id="run-state" class="flowchart-operator-type"></div>');
+                //$operator_type.html(infos.type);
+                $operator_type.appendTo($operator);
+            }
 
             var $operator_body = $('<div class="flowchart-operator-body"></div>');
             $operator_body.html(infos.body);
@@ -1069,7 +1088,7 @@ jQuery(function ($) {
         getDataRef: function () {
             return this.data;
         },
-
+        /* Add state to title to indicate health or not */
         setOperatorTitle: function (operatorId, title) {
             this.data.operators[operatorId].internal.els.title.html(title);
             if (typeof this.data.operators[operatorId].properties == 'undefined') {
@@ -1078,6 +1097,16 @@ jQuery(function ($) {
             this.data.operators[operatorId].properties.title = title;
             this._refreshInternalProperties(this.data.operators[operatorId]);
             this.callbackEvent('afterChange', ['operator_title_change']);
+        },
+        /* 设置状态 */
+        setOperatorState: function (operatorId, state) {
+            // if (typeof this.data.operators[operatorId].properties == 'undefined') {
+            //     this.data.operators[operatorId].properties = {};
+            // }
+            // this._refreshInternalProperties(this.data.operators[operatorId]);
+            // this.callbackEvent('afterChange', ['operator_state_change']);
+            nd = $(this.data.operators[operatorId].internal.els.operator).children('#run-state');
+            nd.toggleClass('flowchart-operator-type-a');
         },
 
         setOperatorBody: function (operatorId, body) {
@@ -1173,13 +1202,13 @@ jQuery(function ($) {
         },
 
         getOperatorFullProperties: function (operatorData) {
-            if (typeof operatorData.type != 'undefined') {
-                var typeProperties = this.data.operatorTypes[operatorData.type];
+            if (typeof operatorData.prop != 'undefined') {
+                var typeProperties = {type: this.data.operatorTypes[operatorData.prop]};//type to: 'DBG' or 'SVR'
                 var operatorProperties = {};
                 if (typeof operatorData.properties != 'undefined') {
                     operatorProperties = operatorData.properties;
                 }
-                return $.extend({}, typeProperties, operatorProperties);
+                return $.extend({}, operatorProperties, typeProperties);
             } else {
                 return operatorData.properties;
             }
