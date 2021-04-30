@@ -19,7 +19,7 @@ jQuery(function ($) {
             data: {
                 /* Why we need this? because NR_SIM is business logic, and SVR/CLI/MIX is coherent */
                 operatorTypes: {
-                    "NR_SIM": "DBG",    //dash dot link
+                    "NR_SIM": "NR_SIM",    //dash dot link
                     "IOT_SVR": "MIX",   //main channel   
                     "IOT_GW": "CLI",
                     "EMQ" : "SVR",
@@ -424,7 +424,13 @@ jQuery(function ($) {
             overallGroup.appendChild(group);
 
             var shape_path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            shape_path.setAttribute("stroke-width", this.options.linkWidth.toString());
+            var linkw = this.options.linkWidth;
+            if (fromOperator.prop === "NR_SIM" || toOperator.prop === "NR_SIM") {
+                console.log(fromOperator);
+                linkw = linkw / 2;
+                shape_path.setAttribute("stroke-dasharray", "5,5");
+            } 
+            shape_path.setAttribute("stroke-width", linkw.toString());
             shape_path.setAttribute("fill", "none");
             group.appendChild(shape_path);
             linkData.internal.els.path = shape_path;
@@ -1203,7 +1209,7 @@ jQuery(function ($) {
 
         getOperatorFullProperties: function (operatorData) {
             if (typeof operatorData.prop != 'undefined') {
-                var typeProperties = {type: this.data.operatorTypes[operatorData.prop]};//type to: 'DBG' or 'SVR'
+                var typeProperties = {type: this.data.operatorTypes[operatorData.prop]};//type to: 'NR_SIM' or 'SVR'
                 var operatorProperties = {};
                 if (typeof operatorData.properties != 'undefined') {
                     operatorProperties = operatorData.properties;

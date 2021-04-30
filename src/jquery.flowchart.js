@@ -412,7 +412,11 @@ jQuery(function ($) {
             overallGroup.appendChild(group);
 
             var shape_path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            shape_path.setAttribute("stroke-width", this.options.linkWidth.toString());
+            var linkw = this.options.linkWidth;
+            if (fromOperator) {
+                console.log(fromOperator);
+            } 
+            shape_path.setAttribute("stroke-width", linkw.toString());
             shape_path.setAttribute("fill", "none");
             group.appendChild(shape_path);
             linkData.internal.els.path = shape_path;
