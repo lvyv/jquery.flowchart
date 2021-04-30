@@ -28,7 +28,7 @@ jQuery(function ($) {
             },
             distanceFromArrow: 3,
             defaultOperatorClass: 'flowchart-default-operator',
-            defaultLinkColor: '#3366ff',
+            defaultLinkColor: '#999499',
             defaultSelectedLinkColor: 'black',
             linkWidth: 10,
             grid: 20,
@@ -363,7 +363,7 @@ jQuery(function ($) {
             this.data.links[linkId].color = color;
             this.callbackEvent('afterChange', ['link_change_main_color']);
         },
-
+        //画连接线
         _drawLink: function (linkId) {
             var linkData = this.data.links[linkId];
 
